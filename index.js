@@ -24,8 +24,10 @@ module.exports = function({ bot, knex, config, commands }) {
     })
 
   bot.on("interactionCreate", async i => {
+    if (!i.data.type == 3) {return;}
+
     console.log(i)
     await i.acknowledge(64)
-    await i.createFollowUp({content: "Acknowledged."})
+    await i.createFollowup( {content: "Acknowledged."} )
   })
 }
