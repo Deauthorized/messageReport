@@ -1,4 +1,4 @@
-module.exports = function({ bot, knex, config, commands, knex, threads }) {
+module.exports = function({ bot, knex, config, commands, threads }) {
   function log(log) {
     console.info(`[messageReport:log] ${log}`)
   }
