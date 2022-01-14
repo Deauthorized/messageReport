@@ -16,5 +16,5 @@ module.exports = function({ bot, knex, config, commands }) {
       return;
     }
 
-    log(`Configured Application ID is: ${config["mr.appId"].substring(0,10)}********`)
+    log(`Configured Application ID is: ${appId.substring(0,10)}********`)
   }
