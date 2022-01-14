@@ -50,7 +50,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       categoryId: config.categoryAutomation.newThread
     })
       .then(nt => {
-        nt.postSystemMessage(`:gear: **Message Report**\n\n**${reportMsg.author.username}#${reportMsg.author.discriminator} =>  <#${reportMsg.channel.id}>:** ${reportMsg.cleanContent}`)
+        nt.postSystemMessage(`:gear: **Message Report** (https://discord.com/channels/${reportMsg.guildID}/${reportMsg.channel.id}/${reportMsg.id})\n\n**${reportMsg.author.username}#${reportMsg.author.discriminator} => <#${reportMsg.channel.id}>:** ${reportMsg.cleanContent.substring(0, 100)}`)
         i.createFollowup( {content: (!config.mr["reportResponseMessage"] ? "Thank you! A modmail thread has been created with this message attached." : config.mr["reportResponseMessage"])} )
       })
 
