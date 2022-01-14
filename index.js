@@ -33,6 +33,9 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     await i.acknowledge(64)
 
+    console.log(threads.findOpenThreadByUserId(i.member.id))
+    console.log(isBlocked(i.member.id))
+
     if (threads.findOpenThreadByUserId(i.member.id)) {
       await i.createFollowup( {content: "You already have an active thread."} )
       return;
