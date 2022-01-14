@@ -12,7 +12,7 @@ module.exports = function({ bot, knex, config, commands }) {
     const appId = config["mr.appId"];
 
     if (!appId) {
-      err("An Application ID is required to publish my interaction commands. Halt.")
+      err("An Application ID is required to publish my interaction commands.")
       return;
     }
 
