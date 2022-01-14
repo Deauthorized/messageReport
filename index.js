@@ -47,7 +47,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       source: "messagereport",
       categoryId: config.categoryAutomation.newThread
     })
-      .then(nt => {
+      .then(async nt => {
         await nt.postSystemMessage(':gear: **Message Report** Linked message:')
         await i.createFollowup( {content: "Thread created."} )
       })
