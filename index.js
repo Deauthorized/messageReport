@@ -11,7 +11,9 @@ module.exports = function({ bot, knex, config, commands }) {
 
     const appId = bot.application.id;
 
-    bot.get_guild(config["mainServerId"]).createCommand({
+    console.log(bot.guilds)
+
+    bot.guilds.find(config["mainServerId"]).createCommand({
       name: "Report Message",
       description: "Report this message.",
       type: 3
