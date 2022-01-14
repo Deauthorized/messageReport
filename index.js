@@ -14,6 +14,8 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
   log("Initializing...")
 
+  console.log(bot.guilds.get(config.mainServerId[0]).getCommands())
+
   bot.guilds.get(config.mainServerId[0]).createCommand({
     name: "Create Thread",
     type: 3
