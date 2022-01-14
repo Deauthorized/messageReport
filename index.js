@@ -8,7 +8,7 @@ module.exports = function({ bot, knex, config, commands }) {
   }
 
   log("Initializing...")
-  
+
   bot.guilds.get(config.mainServerId[0]).createCommand({
     name: "Report Message",
     type: 3
@@ -22,4 +22,10 @@ module.exports = function({ bot, knex, config, commands }) {
       err(error)
       return;
     })
+
+  bot.on("interactionCreate", async i => {
+    console.log(i)
+    await i.acknowledge(64)
+    await i.createFollowUp({content: "Acknowledged."})
+  })
 }
