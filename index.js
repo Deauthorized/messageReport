@@ -14,6 +14,10 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
   log("Initializing...")
 
+  const reportMsg = config.mr["reportResponseMessage"]
+
+  if (reportMsg == undefined) {const reportMsg = "Thank you! A modmail thread has been created with this message attached."}
+
   bot.guilds.get(config.mainServerId[0]).createCommand({
     name: "Create Thread",
     type: 3
@@ -43,13 +47,15 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       return;
     }
 
+    console.log(i.data)
+
     await threads.createNewThreadForUser(i.member, {
       source: "messagereport",
       categoryId: config.categoryAutomation.newThread
     })
       .then(nt => {
-        nt.postSystemMessage(':gear: **Message Report** Linked message:')
-        i.createFollowup( {content: "Thread created."} )
+        nt.postSystemMessage(`:gear: **Message Report**:`)
+        i.createFollowup( {content: reportMsg} )
       })
 
   })
