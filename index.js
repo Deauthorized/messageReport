@@ -7,12 +7,6 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     console.error(`[messageReport:error] ${err}`)
   }
 
-  function sanitise(string) {
-    string.replace("`", "\`")
-    string.replace("@", "\@")
-    return string;
-  }
-
   async function isBlocked(userId) {
     const row = await knex("blocked_users").where("user_id", userId).first();
     return !!row;
@@ -56,7 +50,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       categoryId: config.categoryAutomation.newThread
     })
       .then(nt => {
-        nt.postSystemMessage(`:gear: **Message Report**\n\n**${reportMsg.author.username}#${reportMsg.author.discriminator} =>  <#${reportMsg.channel.id}>:** ${sanitise(reportMsg.content)}`)
+        nt.postSystemMessage(`:gear: **Message Report**\n\n**${reportMsg.author.username}#${reportMsg.author.discriminator} =>  <#${reportMsg.channel.id}>:** ${reportMsg.cleanContent}`)
         i.createFollowup( {content: (!config.mr["reportResponseMessage"] ? "Thank you! A modmail thread has been created with this message attached." : config.mr["reportResponseMessage"])} )
       })
 
