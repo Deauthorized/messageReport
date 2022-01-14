@@ -7,6 +7,12 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     console.error(`[messageReport:error] ${err}`)
   }
 
+  function sanitise(string) {
+    string.replace("`", "\\`")
+    string.replace("@", "\\@")
+    return string;
+  }
+
   async function isBlocked(userId) {
     const row = await knex("blocked_users").where("user_id", userId).first();
     return !!row;
@@ -43,17 +49,14 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       await i.createFollowup( {content: "You are currently blocked from creating threads."} )
       return;
     }
-
-    const reportMsg = `**${i.member.username}**:`
-
-    console.log(i.data.resolved.messages)
+    const reportMsg = i.data.resolved.messages.first()
 
     await threads.createNewThreadForUser(i.member, {
       source: "messagereport",
       categoryId: config.categoryAutomation.newThread
     })
       .then(nt => {
-        nt.postSystemMessage(`:gear: **Message Report**\n\n${reportMsg}`)
+        nt.postSystemMessage(`:gear: **Message Report**\n\n**${reportMsg.author.username}#${reportMsg.author.discriminator} =>  <#${reportMsg.channel.id}>:** ${sanitise(reportMsg.content)}`)
         i.createFollowup( {content: (!config.mr["reportResponseMessage"] ? "Thank you! A modmail thread has been created with this message attached." : config.mr["reportResponseMessage"])} )
       })
 
