@@ -8,8 +8,8 @@ module.exports = function({ bot, knex, config, commands, threads }) {
   }
 
   function sanitise(string) {
-    string.replace("`", "\\`")
-    string.replace("@", "\\@")
+    string.replace("`", "\`")
+    string.replace("@", "\@")
     return string;
   }
 
