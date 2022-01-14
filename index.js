@@ -33,9 +33,6 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     await i.acknowledge(64)
 
-    console.log(await threads.findOpenThreadByUserId(i.member.id))
-    console.log(await isBlocked(i.member.id))
-
     if (await threads.findOpenThreadByUserId(i.member.id)) {
       await i.createFollowup( {content: "You already have an active thread."} )
       return;
@@ -48,9 +45,11 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     const newThread = await threads.createNewThreadForUser(i.user, {
       source: "messagereport",
-      categoryId: (categoryAutomation.newThreadFromServer[i.guildId] ? categoryAutomation.newThreadFromServer[i.guildId] : categoryAutomation.newThread)
+      categoryId: config.categoryAutomation.newThread
     })
 
     await newThread.postSystemMessage(':gear: **Message Report** Linked message:')
+
+    await i.createFollowup( {content: "Thread created."} )
   })
 }
