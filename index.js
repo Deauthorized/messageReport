@@ -9,14 +9,18 @@ module.exports = function({ bot, knex, config, commands }) {
 
     log("Initializing...")
 
-    const appId = config.mr["appId"];
+    const appId = bot.application.id;
 
-    console.log(bot.application)
+    bot.createGuildCommand(config["mainServerId"], {
+      name: "Report Message",
+      description: "Start a new thread with this message.",
+      type: 3
+    })
+      .then(cmd => {
+        log("Application command published to main server successfully.")
+      })
 
-    if (!appId) {
-      err("An Application ID is required to publish my interaction commands.")
-      return;
-    }
-
-    log(`Configured Application ID is: ${appId.substring(0,10)}********`)
+      .catch(err => {
+        error("Failed to publish application command. This usually means that I do not have permissions to create guild commands in the main server. Unfortunately, the only way to correct this problem is to kick the bot and re-invite it with the `application.commands` scope.")
+      })
   }
