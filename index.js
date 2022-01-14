@@ -20,7 +20,9 @@ module.exports = function({ bot, knex, config, commands }) {
         log("Application command published to main server successfully.")
       })
 
-      .catch(err => {
-        error("Failed to publish application command. This usually means that I do not have permissions to create guild commands in the main server. Unfortunately, the only way to correct this problem is to kick the bot and re-invite it with the `application.commands` scope.")
+      .catch(error => {
+        err("Failed to publish application command. This usually means that I do not have permissions to create guild commands in the main server. Unfortunately, the only way to correct this problem is to kick the bot and re-invite it with the `application.commands` scope.")
+        err(error)
+        return;
       })
   }
