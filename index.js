@@ -35,13 +35,15 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     if (threads.findOpenThreadByUserId(i.member.id)) {
       await i.createFollowup( {content: "You already have an active thread."} )
+      return;
     }
 
     if (isBlocked(i.member.id)) {
-      await i.createFollowup( {content: "You are currently blocked from creating threads."} ) 
+      await i.createFollowup( {content: "You are currently blocked from creating threads."} )
+      return;
     }
 
-    const newThread = await threads.createNewThreadForUser(reactor.user, {
+    const newThread = await threads.createNewThreadForUser(i.user, {
       source: "messagereport",
       categoryId: (categoryAutomation.newThreadFromServer[i.guildId] ? categoryAutomation.newThreadFromServer[i.guildId] : categoryAutomation.newThread)
     })
