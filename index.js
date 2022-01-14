@@ -33,15 +33,15 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     await i.acknowledge(64)
 
-    console.log(threads.findOpenThreadByUserId(i.member.id))
-    console.log(isBlocked(i.member.id))
+    console.log(await threads.findOpenThreadByUserId(i.member.id))
+    console.log(await isBlocked(i.member.id))
 
-    if (threads.findOpenThreadByUserId(i.member.id)) {
+    if (await threads.findOpenThreadByUserId(i.member.id)) {
       await i.createFollowup( {content: "You already have an active thread."} )
       return;
     }
 
-    if (isBlocked(i.member.id)) {
+    if (await isBlocked(i.member.id)) {
       await i.createFollowup( {content: "You are currently blocked from creating threads."} )
       return;
     }
