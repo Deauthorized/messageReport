@@ -14,10 +14,6 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
   log("Initializing...")
 
-  const reportMsg = config.mr["reportResponseMessage"]
-
-  if (reportMsg == undefined) {const reportMsg = "Thank you! A modmail thread has been created with this message attached."}
-
   bot.guilds.get(config.mainServerId[0]).createCommand({
     name: "Create Thread",
     type: 3
@@ -47,7 +43,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       return;
     }
 
-    console.log(i.data)
+    console.log(i.data.resolved.messages)
 
     await threads.createNewThreadForUser(i.member, {
       source: "messagereport",
@@ -55,7 +51,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     })
       .then(nt => {
         nt.postSystemMessage(`:gear: **Message Report**:`)
-        i.createFollowup( {content: reportMsg} )
+        i.createFollowup( {content: (!config.mr["reportResponseMessage"] ? "Thank you! A modmail thread has been created with this message attached." : config.mr["reportResponseMessage"])} )
       })
 
   })
