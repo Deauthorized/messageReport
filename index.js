@@ -14,11 +14,6 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
   log("Initializing...")
 
-  bot.guilds.get(config.mainServerId[0]).getCommands()
-    .then(list => {
-      console.log(list)
-    })
-
   bot.guilds.get(config.mainServerId[0]).createCommand({
     name: "Create Thread",
     type: 3
@@ -35,6 +30,8 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
   bot.on("interactionCreate", async i => {
     if (!i.data.type == 3) {return;}
+
+    console.log(i)
 
     await i.acknowledge(64)
 
