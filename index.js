@@ -44,14 +44,16 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       return;
     }
 
-    console.log(i.data.resolved.messages[0])
+    const reportMsg = `**${i.member.username}**:`
+
+    console.log(i.data.resolved.messages)
 
     await threads.createNewThreadForUser(i.member, {
       source: "messagereport",
       categoryId: config.categoryAutomation.newThread
     })
       .then(nt => {
-        nt.postSystemMessage(`:gear: **Message Report**:`)
+        nt.postSystemMessage(`:gear: **Message Report**\n\n${reportMsg}`)
         i.createFollowup( {content: (!config.mr["reportResponseMessage"] ? "Thank you! A modmail thread has been created with this message attached." : config.mr["reportResponseMessage"])} )
       })
 
