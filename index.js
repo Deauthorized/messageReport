@@ -43,13 +43,14 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       return;
     }
 
-    const newThread = await threads.createNewThreadForUser(i.user, {
+    await threads.createNewThreadForUser(i.member, {
       source: "messagereport",
       categoryId: config.categoryAutomation.newThread
     })
+      .then(nt => {
+        await nt.postSystemMessage(':gear: **Message Report** Linked message:')
+        await i.createFollowup( {content: "Thread created."} )
+      })
 
-    await newThread.postSystemMessage(':gear: **Message Report** Linked message:')
-
-    await i.createFollowup( {content: "Thread created."} )
   })
 }
