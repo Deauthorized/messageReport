@@ -11,7 +11,7 @@ module.exports = function({ bot, knex, config, commands }) {
 
     const appId = bot.application.id;
 
-    bot.createCommand(config["mainServerId"], {
+    bot.createGuildCommand(config["mainServerId"], {
       name: "Report Message",
       description: "Report this message.",
       type: 3
