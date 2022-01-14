@@ -43,6 +43,11 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       await i.createFollowup( {content: "You are currently blocked from creating threads."} )
       return;
     }
+
+    if (i.member.bot == true) {
+      await i.createFollowup( {content: "Beep boop. That's a bot!"} )
+    }
+    
     const reportMsg = i.data.resolved.messages.random()
 
     await threads.createNewThreadForUser(i.member, {
