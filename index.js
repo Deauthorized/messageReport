@@ -13,9 +13,9 @@ module.exports = function({ bot, knex, config, commands }) {
 
     console.log(bot.guilds)
 
-    console.log(config.mainServerId)
+    console.log(config.mainServerId[0])
 
-    bot.guilds.get(config.mainServerId).createCommand({
+    bot.guilds.get(config.mainServerId[0]).createCommand({
       name: "Report Message",
       description: "Report this message.",
       type: 3
