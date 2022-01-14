@@ -1,4 +1,4 @@
-module.exports = function({ bot, knex, config, commands }) {
+module.exports = function({ bot, knex, config, commands, knex, threads }) {
   function log(log) {
     console.info(`[messageReport:log] ${log}`)
   }
@@ -7,10 +7,15 @@ module.exports = function({ bot, knex, config, commands }) {
     console.error(`[messageReport:error] ${err}`)
   }
 
+  async function isBlocked(userId) {
+    const row = await knex("blocked_users").where("user_id", userId).first();
+    return !!row;
+  }
+
   log("Initializing...")
 
   bot.guilds.get(config.mainServerId[0]).createCommand({
-    name: "Report Message",
+    name: "Create Thread",
     type: 3
   })
     .then(cmd => {
@@ -26,8 +31,21 @@ module.exports = function({ bot, knex, config, commands }) {
   bot.on("interactionCreate", async i => {
     if (!i.data.type == 3) {return;}
 
-    console.log(i)
     await i.acknowledge(64)
-    await i.createFollowup( {content: "Acknowledged."} )
+
+    if (threads.findOpenThreadByUserId(i.member.id)) {
+      await i.createFollowup( {content: "You already have an active thread."} )
+    }
+
+    if (isBlocked(i.member.id)) {
+      await i.createFollowup( {content: "You are currently blocked from creating threads."} ) 
+    }
+
+    const newThread = await threads.createNewThreadForUser(reactor.user, {
+      source: "messagereport",
+      categoryId: (categoryAutomation.newThreadFromServer[i.guildId] ? categoryAutomation.newThreadFromServer[i.guildId] : categoryAutomation.newThread)
+    })
+
+    await newThread.postSystemMessage(':gear: **Message Report** Linked message:')
   })
 }
