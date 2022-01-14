@@ -11,6 +11,8 @@ module.exports = function({ bot, knex, config, commands }) {
 
     const appId = config.mr["appId"];
 
+    console.log(bot.application)
+
     if (!appId) {
       err("An Application ID is required to publish my interaction commands.")
       return;
