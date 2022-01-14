@@ -47,7 +47,6 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     const reportMsg = i.data.resolved.messages.random()
 
     await threads.createNewThreadForUser(i.member, {
-      source: "messagereport",
       categoryId: config.categoryAutomation.newThread
     })
       .then(nt => {
