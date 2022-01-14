@@ -14,7 +14,10 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
   log("Initializing...")
 
-  console.log(bot.guilds.get(config.mainServerId[0]).getCommands())
+  bot.guilds.get(config.mainServerId[0]).getCommands()
+    .then(list => {
+      console.log(list)
+    })
 
   bot.guilds.get(config.mainServerId[0]).createCommand({
     name: "Create Thread",
@@ -45,7 +48,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       return;
     }
 
-    console.log(i.data.resolved.messages)
+    console.log(i.data.resolved.messages[0])
 
     await threads.createNewThreadForUser(i.member, {
       source: "messagereport",
