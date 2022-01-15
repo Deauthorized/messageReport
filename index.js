@@ -1,10 +1,10 @@
 module.exports = function({ bot, knex, config, commands, threads }) {
   function log(log) {
-    console.info(`[messageReport:log] ${log}`);
+    console.info(`(dev) [messageReport:log] ${log}`);
   }
 
   function err(err) {
-    console.error(`[messageReport:error] ${err}`);
+    console.error(`(dev) [messageReport:error] ${err}`);
   }
 
   async function isBlocked(userId) {
