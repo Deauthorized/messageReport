@@ -6,6 +6,7 @@ Please run `npm install eris@0.16.1` in the root folder. Then replace line 145 i
 
 # Config
 Add these lines.
-`mr.reportResponseMessage = "Thank you. A thread has been created with the attached message."
+
+```mr.reportResponseMessage = "Thank you. A thread has been created with the attac$
 plugins[] = npm:Deauthorized/messageReport
-`
+```
