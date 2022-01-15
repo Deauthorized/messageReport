@@ -19,11 +19,11 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     type: 3
   })
     .then(cmd => {
-      log("The Report Message interaction was successfully published to the main server. It can be accessed via Right Click => Apps => Report Message.")
+      log("Application command published to main server successfully.")
     })
 
     .catch(error => {
-      err("Failed to publish the Report Message interaction. This usually means that I do not have the 'application.commands' scope. Unfortunately, the only way to correct this problem is to kick the bot and re-invite it with the `application.commands` scope enabled.")
+      err("Failed to publish application command. This usually means that I do not have permissions to create guild commands in the main server. Unfortunately, the only way to correct this problem is to kick the bot and re-invite it with the `application.commands` scope.")
       err(error)
       return;
     })
@@ -58,7 +58,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     })
       .then(nt => {
         nt.postSystemMessage(`:gear: **Message Report** (https://discord.com/channels/${reportMsg.guildID}/${reportMsg.channel.id}/${reportMsg.id})\n\n**${reportMsg.author.username}#${reportMsg.author.discriminator} => <#${reportMsg.channel.id}>:** ${(reportMsg.cleanContent.substring(0, 300).length == 0 ? "[no content]" : reportMsg.cleanContent.substring(0, 300))}`)
-        i.createFollowup( { content: config.mr["reportResponseMessage"] } )
+        i.createFollowup( {content: (!config.mr["reportResponseMessage"] ? "Thank you! A modmail thread has been created with this message attached." : config.mr["reportResponseMessage"])} )
       })
 
   })
