@@ -37,8 +37,8 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     const reportMsg = i.data.resolved.messages.random()
 
     if (await isBlocked(i.member.id)) {
-      const row = await knex("blocked_users").where("user_id", i.member.id).first()
-      await i.createFollowup( { content: `**You are currently blocked from creating threads.** This block ${(row.expires_at == null ? "has not been set to expire automatically." : `will expire <t:${Math.round(new Date(row.expires_at.toString()).parse() / 1000)}:R>`)}` } )
+      const row = await knex("blocked_users").where("user_id", i.member.id).first();
+      await i.createFollowup( { content: `**You are currently blocked from creating threads.** This block ${(row.expires_at == null ? "has not been set to expire automatically." : `will expire <t:${Math.round(new Date(row.expires_at).parse() / 1000)}:R>`)}` } );
       return;
     }
 
