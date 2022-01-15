@@ -19,11 +19,11 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     type: 3
   })
     .then(cmd => {
-      log("Application command published to main server successfully.")
+      log("The Report Message interaction was successfully published to the main server. It can be accessed via Right Click => Apps => Report Message.")
     })
 
     .catch(error => {
-      err("Failed to publish application command. This usually means that I do not have permissions to create guild commands in the main server. Unfortunately, the only way to correct this problem is to kick the bot and re-invite it with the `application.commands` scope.")
+      err("Failed to publish the Report Message interaction. This usually means that I do not have the 'application.commands' scope. Unfortunately, the only way to correct this problem is to kick the bot and re-invite it with the `application.commands` scope enabled.")
       err(error)
       return;
     })
