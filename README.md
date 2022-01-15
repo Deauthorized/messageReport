@@ -16,3 +16,7 @@ plugins[] = npm:Deauthorized/messageReport
 ```
 mr.reportResponseMessage = ""**Message reported.** If you'd like to add any additional information, you may do so in my direct messages. Thank you!"
 ```
+
+# Caveat's 
+
+1) Only supports one main server (for now)
