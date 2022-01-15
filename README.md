@@ -14,5 +14,5 @@ plugins[] = npm:Deauthorized/messageReport
 ```
 
 ```
-mr.reportResponseMessage = "Thank you. A thread has been created with the attached message."
+mr.reportResponseMessage = ""**Message reported.** If you'd like to add any additional information, you may do so in my direct messages. Thank you!"
 ```
