@@ -1,11 +1,11 @@
 {
   "name": "messagereport",
   "version": "1.0.0",
-  "description": "An inline reporting subsystem for Dragory's Mod-Mail.",
+  "description": "An inline reporting subsystem for Dragory's Mod-Mail. Bleeding-edge build.",
   "main": "./index.js",
 
   "repository": {
     "type": "git",
-    "url": "https://github.com/Deauthorized/messageReport"
+    "url": "https://github.com/Deauthorized/messageReport/tree/dev"
   }
 }
