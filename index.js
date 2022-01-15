@@ -34,19 +34,27 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     await i.acknowledge(64)
 
-    if (await threads.findOpenThreadByUserId(i.member.id)) {
-      await i.createFollowup( {content: "You already have an active thread."} )
-      return;
-    }
-
-    if (await isBlocked(i.member.id)) {
-      await i.createFollowup( {content: "You are currently blocked from creating threads."} )
-      return;
-    }
-
     const reportMsg = i.data.resolved.messages.random()
 
+    if (await isBlocked(i.member.id)) {
+      const row = await knex("blocked_users").where("user_id", i.member.id).first()
+      console.log(row)
+      await i.createFollowup( { content: `**You are currently blocked from creating threads.**` } )
+      return;
+    }
+
+    if (await threads.findOpenThreadByUserId(i.member.id)) {
+      await i.createFollowup( { content: "You already have an active thread." } )
+      return;
+    }
+
+    if (reportMsg.type !== 0) {
+      await i.createFollowup( { content: "This type of message cannot be reported." } )
+      return;
+    }
+
     await threads.createNewThreadForUser(i.member, {
+      source: "messagereport",
       categoryId: config.categoryAutomation.newThread
     })
       .then(nt => {
