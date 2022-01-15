@@ -19,4 +19,5 @@ mr.reportResponseMessage = **Message reported.** If you would like to add any ad
 
 # Caveat's 
 
-1) Only supports one main server (for now)
+1) Only supports one main server (for now).
+2) Users will need to have "Use Application Commands" permission enabled.
