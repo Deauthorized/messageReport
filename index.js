@@ -9,7 +9,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
   async function isBlocked(userId) {
     const row = await knex("blocked_users").where("user_id", userId).first();
-    return row;
+    return !!row;
   }
 
   log("Initializing...");
@@ -44,7 +44,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     const msgModel = `:page_with_curl: **Reported Message** (https://discord.com/channels/${reportMsg.guildID}/${reportMsg.channel.id}/${reportMsg.id})\n\n**${reportMsg.author.username}#${reportMsg.author.discriminator} => <#${reportMsg.channel.id}>:** ${(reportMsg.cleanContent.substring(0, 300).length == 0 ? "[no content]" : reportMsg.cleanContent.substring(0, 300))}`
 
-    if (await threads.findOpenThreadByUserId(i.member.id), async t => {
+    if (await threads.findOpenThreadByUserId(i.member.id, async t => {
       console.log(t);
       if (t) {
         t.postSystemMessage(msgModel);
@@ -52,7 +52,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
         return;
       }
       return;
-    })
+    }))
 
     if (reportMsg.type !== 0) {
       await i.createFollowup( { content: "This type of message cannot be reported." } );
