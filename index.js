@@ -1,10 +1,10 @@
 module.exports = function({ bot, knex, config, commands, threads }) {
   function log(log) {
-    console.info(`(dev) [messageReport:log] ${log}`);
+    console.info(`[messageReport:log] ${log}`);
   }
 
   function err(err) {
-    console.error(`(dev) [messageReport:error] ${err}`);
+    console.error(`[messageReport:error] ${err}`);
   }
 
   async function isBlocked(userId) {
@@ -13,6 +13,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
   }
 
   log("Initializing...");
+  log("You are running the dev version of this plugin. Continue at your own risk.")
 
   bot.guilds.get(config.mainServerId[0]).createCommand({
     name: "Report Message",
