@@ -44,9 +44,10 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     console.log(await threads.findOpenThreadByUserId(i.member.id));
 
-    if (await threads.findOpenThreadByUserId(i.member.id)) t => {
-      console.log(t);
-      i.createFollowup( { content: "You already have an active thread." } )
+    if (await threads.findOpenThreadByUserId(i.member.id)){
+      const t = await threads.findOpenThreadByUserId(i.member.id)
+      await t.postSystemMessage(msgModel);
+      await i.createFollowup( { content: "Message attached to existing modmail thread." } )
       return;
     }
 
