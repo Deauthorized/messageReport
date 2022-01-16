@@ -41,16 +41,16 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     const reportMsg = i.data.resolved.messages.random()
 
     const msgModel = `:pencil: **${i.member.username}** reported a message:\n**${reportMsg.author.username}#${reportMsg.author.discriminator} => <#${reportMsg.channel.id}>:** ${(reportMsg.cleanContent.substring(0, 300).length == 0 ? "[no content]" : reportMsg.cleanContent.substring(0, 300))}\n\n(https://discord.com/channels/${reportMsg.guildID}/${reportMsg.channel.id}/${reportMsg.id})`
-
+ 
+    if (reportMsg.type !== 0) {
+      await i.createFollowup( { content: "This type of message cannot be reported." } );
+      return;
+    }
+    
     if (await threads.findOpenThreadByUserId(i.member.id)){
       const t = await threads.findOpenThreadByUserId(i.member.id)
       await t.postSystemMessage(msgModel);
       await i.createFollowup( { content: "Message attached to existing modmail thread." } )
-      return;
-    }
-
-    if (reportMsg.type !== 0) {
-      await i.createFollowup( { content: "This type of message cannot be reported." } );
       return;
     }
 
