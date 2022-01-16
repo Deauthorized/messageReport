@@ -44,7 +44,8 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     console.log(await threads.findOpenThreadByUserId(i.member.id));
 
-    if (await threads.findOpenThreadByUserId(i.member.id)) {
+    if (await threads.findOpenThreadByUserId(i.member.id)) t => {
+      console.log(t);
       await i.createFollowup( { content: "You already have an active thread." } )
       return;
     }
