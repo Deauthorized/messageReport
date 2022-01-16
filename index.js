@@ -12,8 +12,6 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     return !!row;
   }
 
-  log("Initializing...");
-
   bot.guilds.get(config.mainServerId[0]).createCommand({
     name: "Report Message",
     type: 3
