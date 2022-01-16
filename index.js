@@ -42,6 +42,8 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     const msgModel = `:page_with_curl: **Message Report** (https://discord.com/channels/${reportMsg.guildID}/${reportMsg.channel.id}/${reportMsg.id})\n\n**${reportMsg.author.username}#${reportMsg.author.discriminator} => <#${reportMsg.channel.id}>:** ${(reportMsg.cleanContent.substring(0, 300).length == 0 ? "[no content]" : reportMsg.cleanContent.substring(0, 300))}`
 
+    console.log(await threads.findOpenThreadByUserId(i.member.id));
+
     if (await threads.findOpenThreadByUserId(i.member.id)) {
       await i.createFollowup( { content: "You already have an active thread." } )
       return;
