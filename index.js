@@ -1,4 +1,6 @@
 module.exports = function({ bot, knex, config, commands, threads }) {
+  const responseMsg = (!config.mr["reportResponseMessage"] ? "Thank you! A modmail thread has been created with this message attached." : config.mr["reportResponseMessage"])
+
   function log(log) {
     console.info(`[messageReport:log] ${log}`);
   }
@@ -50,7 +52,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     if (await threads.findOpenThreadByUserId(i.member.id)){
       const t = await threads.findOpenThreadByUserId(i.member.id)
       await t.postSystemMessage(msgModel);
-      await i.createFollowup( { content: "Message attached to existing modmail thread." } )
+      await i.createFollowup( { content: responseMsg } )
       return;
     }
 
@@ -60,7 +62,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     })
       .then(nt => {
         nt.postSystemMessage(msgModel);
-        i.createFollowup( {content: (!config.mr["reportResponseMessage"] ? "Thank you! A modmail thread has been created with this message attached." : config.mr["reportResponseMessage"])} );
+        i.createFollowup( { content: responseMsg } );
       })
 
   })
