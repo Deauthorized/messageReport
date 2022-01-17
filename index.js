@@ -10,7 +10,8 @@ module.exports = function({ bot, knex, config, commands, threads }) {
   }
 
   function escape(str) {
-    let strs = str.replace("`", "")
+    let r = new RegExp("([_*\[\]()~`>\#\+\-=|\.!])")
+    let strs = str.replace(r, "")
     return strs;
   }
 
