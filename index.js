@@ -47,7 +47,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     const reportMsg = i.data.resolved.messages.random()
 
-    const msgModel = `:pencil: **${i.member.username}** reported a message:\n**${reportMsg.author.username}#${reportMsg.author.discriminator} (${reportMsg.author.id}) => <#${reportMsg.channel.id}>:** ${(reportMsg.content.substring(0, 300).length == 0 ? "[no content]" : `\`\`\`${reportMsg.content.substring(0, 300).escape()}\`\`\``)}${(reportMsg.attachments.length !== 0 ? ` [${reportMsg.attachments.length} attachments]` : "")}\n\n(https://discord.com/channels/${reportMsg.guildID}/${reportMsg.channel.id}/${reportMsg.id})`
+    const msgModel = `:pencil: **${i.member.username}** reported a message:\n**${reportMsg.author.username}#${reportMsg.author.discriminator} (${reportMsg.author.id}) => <#${reportMsg.channel.id}>:** ${(reportMsg.content.substring(0, 300).length == 0 ? "[no content]" : `\`\`\`${escape(reportMsg.content.substring(0, 300))}\`\`\``)}${(reportMsg.attachments.length !== 0 ? ` [${reportMsg.attachments.length} attachments]` : "")}\n\n(https://discord.com/channels/${reportMsg.guildID}/${reportMsg.channel.id}/${reportMsg.id})`
  
     if (reportMsg.type !== 0) {
       await i.createFollowup( { content: "This type of message cannot be reported." } );
