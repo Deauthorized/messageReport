@@ -1,6 +1,8 @@
 module.exports = function({ bot, knex, config, commands, threads }) {
   const responseMsg = (!config.mr["reportResponseMessage"] ? "Thank you! Our moderators will take a look and take any action if needed." : config.mr["reportResponseMessage"])
 
+  // Misc functions
+
   function log(log) {
     console.info(`[messageReport:log] ${log}`);
   }
@@ -19,6 +21,8 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     return !!row;
   }
 
+  // Publish the app interaction to the main server
+
   bot.guilds.get(config.mainServerId[0]).createCommand({
     name: "Report Message",
     type: 3
@@ -28,12 +32,18 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     })
 
     .catch(error => {
+
+      // The only time this would error I think is if the bot lacked the application.commands scope, so we'll just assume that's why
+      
       err("Fatal: Failed to publish the Report Message interaction in the main server. Unfortunately, the only way to correct this problem is to kick the bot and re-invite it with the `application.commands` scope.");
       err(error);
       return;
     })
 
   bot.on("interactionCreate", async i => {
+
+    // Making sure this is the interaction we want
+
     if (!i.data.type == 3) {return;}
     if (!i.name == "Report Message") {return;}
 
@@ -45,14 +55,20 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       return;
     }
 
+    // Format the reported message. Probably shouldn't be using random() but I was tired and this worked so ¯\_(ツ)_/¯
+
     const reportMsg = i.data.resolved.messages.random()
 
-    const msgModel = `:pencil: **${i.member.username}** reported a message:\n**${reportMsg.author.username}#${reportMsg.author.discriminator} (<@${reportMsg.author.id}>) => <#${reportMsg.channel.id}>:** ${(reportMsg.content.substring(0, 300).length == 0 ? "[no content]" : `\`\`\`${escape(reportMsg.content.substring(0, 300))}\`\`\``)}${(reportMsg.attachments.length !== 0 ? ` [${reportMsg.attachments.length} attachments]` : "")}\n\n(https://discord.com/channels/${reportMsg.guildID}/${reportMsg.channel.id}/${reportMsg.id})`
- 
+    const msgModel = `:pencil: **${i.member.username}** reported a message:\n**${reportMsg.author.username}#${reportMsg.author.discriminator} (${reportMsg.author.id}) => <#${reportMsg.channel.id}>:** ${(reportMsg.content.substring(0, 300).length == 0 ? "[no content]" : `\`\`\`${escape(reportMsg.content.substring(0, 300))}\`\`\``)}${(reportMsg.attachments.length !== 0 ? ` [${reportMsg.attachments.length} attachments]` : "")}\n\n(https://discord.com/channels/${reportMsg.guildID}/${reportMsg.channel.id}/${reportMsg.id})`
+    
+    // Only allows regular messages to be reported for compatibility reasons
+
     if (reportMsg.type !== 0) {
       await i.createFollowup( { content: "This type of message cannot be reported." } );
       return;
     }
+
+    // If the user already has an active thread then add it to that and stop there
     
     if (await threads.findOpenThreadByUserId(i.member.id)){
       const t = await threads.findOpenThreadByUserId(i.member.id)
@@ -60,6 +76,8 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       await i.createFollowup( { content: responseMsg } )
       return;
     }
+
+    // Actually do the thing
 
     await threads.createNewThreadForUser(i.member, {
       source: "messagereport",
@@ -69,6 +87,8 @@ module.exports = function({ bot, knex, config, commands, threads }) {
         nt.postSystemMessage(msgModel);
         i.createFollowup( { content: responseMsg } );
       })
+
+    // Okay we're done bye
 
   })
 }
