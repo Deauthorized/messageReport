@@ -10,7 +10,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
   }
 
   function escape(str) {
-    let strs = str.replace("`", "\`")
+    let strs = str.replace("`", "")
     return strs;
   }
 
