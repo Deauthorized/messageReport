@@ -1,5 +1,5 @@
 module.exports = function({ bot, knex, config, commands, threads }) {
-  const responseMsg = (!config.mr["reportResponseMessage"] ? "Thank you! A modmail thread has been created with this message attached." : config.mr["reportResponseMessage"])
+  const responseMsg = (!config.mr["reportResponseMessage"] ? "Thank you! Our moderators will take a look and take any action if needed." : config.mr["reportResponseMessage"])
 
   function log(log) {
     console.info(`[messageReport:log] ${log}`);
@@ -47,7 +47,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     const reportMsg = i.data.resolved.messages.random()
 
-    const msgModel = `:pencil: **${i.member.username}** reported a message:\n**${reportMsg.author.username}#${reportMsg.author.discriminator} (${reportMsg.author.id}) => <#${reportMsg.channel.id}>:** ${(reportMsg.content.substring(0, 300).length == 0 ? "[no content]" : `\`\`\`${escape(reportMsg.content.substring(0, 300))}\`\`\``)}${(reportMsg.attachments.length !== 0 ? ` [${reportMsg.attachments.length} attachments]` : "")}\n\n(https://discord.com/channels/${reportMsg.guildID}/${reportMsg.channel.id}/${reportMsg.id})`
+    const msgModel = `:pencil: **${i.member.username}** reported a message:\n**${reportMsg.author.username}#${reportMsg.author.discriminator} (<@${reportMsg.author.id}>) => <#${reportMsg.channel.id}>:** ${(reportMsg.content.substring(0, 300).length == 0 ? "[no content]" : `\`\`\`${escape(reportMsg.content.substring(0, 300))}\`\`\``)}${(reportMsg.attachments.length !== 0 ? ` [${reportMsg.attachments.length} attachments]` : "")}\n\n(https://discord.com/channels/${reportMsg.guildID}/${reportMsg.channel.id}/${reportMsg.id})`
  
     if (reportMsg.type !== 0) {
       await i.createFollowup( { content: "This type of message cannot be reported." } );
