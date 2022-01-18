@@ -35,7 +35,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
       // The only time this would error I think is if the bot lacked the application.commands scope, so we'll just assume that's why
       
-      err("Fatal: Failed to publish the Report Message interaction in the main server. Unfortunately, the only way to correct this problem is to kick the bot and re-invite it with the `application.commands` scope.");
+      err("Failed to publish the Report Message interaction in the main server.");
       err(error);
       return;
     })
