@@ -13,8 +13,11 @@ Add these lines.
 plugins[] = npm:Deauthorized/messageReport
 ```
 
+Optional.
+
 ```
-mr.reportResponseMessage = **Message reported.** If you would like to add any additional information, you may do so in my direct messages. Thank you!
+mr.reportResponseMessage = Thank you! Our moderators will take a look and take any action if needed.
+mr.categoryId = 000000000000000000
 ```
 
 # Caveats 
