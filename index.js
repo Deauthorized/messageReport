@@ -47,7 +47,9 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     if (!i.data.type == 3) {return;}
     if (!i.name == "Report Message") {return;}
 
-    await i.acknowledge(64)
+    await i.acknowledge(64);
+
+    // Obvious reasons
 
     if (await isBlocked(i.member.id)) {
       const row = await knex("blocked_users").where("user_id", i.member.id).first();
@@ -68,12 +70,19 @@ module.exports = function({ bot, knex, config, commands, threads }) {
       return;
     }
 
+    // Disallow self reporting
+
+    if (i.member.id == reportMsg.author.id) {
+      await i.createFollowup( { content: "You may not report your own messages." } );
+      return;
+    }
+
     // If the user already has an active thread then add it to that and stop there
     
     if (await threads.findOpenThreadByUserId(i.member.id)){
-      const t = await threads.findOpenThreadByUserId(i.member.id)
+      const t = await threads.findOpenThreadByUserId(i.member.id);
       await t.postSystemMessage(msgModel);
-      await i.createFollowup( { content: responseMsg } )
+      await i.createFollowup( { content: responseMsg } );
       return;
     }
 
