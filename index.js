@@ -90,7 +90,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
 
     await threads.createNewThreadForUser(i.member, {
       source: "messagereport",
-      categoryId: config.categoryAutomation.newThread
+      categoryId: (!config.mr["categoryId"] ? config.categoryAutomation.newThread : config.mr["categoryId"])
     })
       .then(nt => {
         nt.postSystemMessage(msgModel);
