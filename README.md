@@ -17,7 +17,7 @@ Optional.
 
 ```
 mr.reportResponseMessage = Thank you! Our moderators will take a look and take any action if needed.
-mr.categoryId = 000000000000000000
+mr.categoryId = <will default to categoryAutomation.newThread>
 ```
 
 # Caveats 
