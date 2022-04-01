@@ -66,6 +66,7 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     // Only allows regular messages to be reported for compatibility reasons
 
     if (reportMsg.type !== (0 || 19)) {
+      console.log(reportMsg.type);
       await i.createFollowup( { content: "**This type of message cannot be reported.**" } );
       return;
     }
