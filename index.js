@@ -65,15 +65,15 @@ module.exports = function({ bot, knex, config, commands, threads }) {
     
     // Only allows regular messages to be reported for compatibility reasons
 
-    if (reportMsg.type !== 0) {
-      await i.createFollowup( { content: "This type of message cannot be reported." } );
+    if (reportMsg.type !== 0 || reportMsg.type !== 19) {
+      await i.createFollowup( { content: "**This type of message cannot be reported.**" } );
       return;
     }
 
     // Disallow self reporting
 
     if (i.member.id == reportMsg.author.id) {
-      await i.createFollowup( { content: "You may not report your own messages." } );
+      await i.createFollowup( { content: "**You may not report your own messages.**" } );
       return;
     }
 
