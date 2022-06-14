@@ -2,9 +2,11 @@
 inline message reporting plugin for dragory's modmailbot.
 
 # First things first
-This plugin has support for application commands, which the bundled version of eris that comes with modmailbot **does not support.**
+~~This plugin has support for application commands, which the bundled version of eris that comes with modmailbot **does not support.**~~
 
-Please run `npm install eris@0.16.1` in the root folder. Then replace line 145 in src/main.js with `if (msg.channel instanceof Eris.GuildChannel) return;`. If you don't do this, the bot will not be able to receive any DMs.
+~~Please run `npm install eris@0.16.1` in the root folder. Then replace line 145 in src/main.js with `if (msg.channel instanceof Eris.GuildChannel) return;`. If you don't do this, the bot will not be able to receive any DMs.~~
+
+This step is no longer required with the latest version of the bot.
 
 # Config
 Add these lines.
