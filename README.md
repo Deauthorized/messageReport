@@ -25,4 +25,4 @@ mr.categoryId = <will default to categoryAutomation.newThread>
 # Caveats 
 
 1) Only supports one main server (for now).
-2) Users will need to have the "Use Application Commands" permission enabled.
+2) Users will need to have the "Use Application Commands" permission enabled, or permissions to use the "Report Message" interaction that will be generated. (go to server settings > integrations to set it)
